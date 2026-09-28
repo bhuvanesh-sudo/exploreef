@@ -31,7 +31,7 @@ project/assembly_name="Exploreef"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg", "res://addons/gut/plugin.cfg")
 
 [input]
 
