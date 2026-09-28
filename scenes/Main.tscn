@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/PlayerRig.tscn" id="1_rig"]
+
+[sub_resource type="Environment" id="Environment_underwater"]
+background_mode = 1
+background_color = Color(0.02, 0.16, 0.26, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.25, 0.5, 0.6, 1)
+ambient_light_energy = 0.7
+tonemap_mode = 3
+fog_enabled = true
+fog_light_color = Color(0.03, 0.22, 0.32, 1)
+fog_density = 0.045
+adjustment_enabled = true
+adjustment_saturation = 1.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sand"]
+albedo_color = Color(0.78, 0.7, 0.52, 1)
+roughness = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_seabed"]
+material = SubResource("StandardMaterial3D_sand")
+size = Vector2(80, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_seabed"]
+size = Vector3(80, 1, 80)
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_underwater")
+
+[node name="SunLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.25, -0.433013, 0, 0.866025, 0.5, 0.5, -0.433013, 0.75, 0, 20, 0)
+light_color = Color(0.7, 0.9, 1, 1)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="Seabed" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Seabed"]
+mesh = SubResource("PlaneMesh_seabed")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Seabed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_seabed")
+
+[node name="PlayerRig" parent="." instance=ExtResource("1_rig")]
